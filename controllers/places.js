@@ -19,6 +19,20 @@ exports.getMultiple = async (page = 1) => {
   };
 };
 
+exports.getOffLimit = async (offset, limit) => {
+  const rows = await db.query(
+    `SELECT * FROM tbl_places LIMIT ${offset},${limit}`
+  );
+  const data = helper.emptyOrRows(rows);
+  const length = data.length;
+  const status = length < 1 ? false : true;
+  return {
+    status,
+    data,
+    length,
+  };
+};
+
 exports.getCategory = async (cid, search) => {
   const rows = await db.query(
     `SELECT * FROM tbl_places LEFT JOIN tbl_category ON tbl_places.p_cat_id = tbl_category.cid WHERE tbl_places.p_cat_id = ${cid} ${

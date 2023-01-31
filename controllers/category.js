@@ -29,3 +29,17 @@ exports.getAll = async () => {
     length,
   };
 };
+
+exports.getOffLimit = async (offset, limit) => {
+  const rows = await db.query(
+    `SELECT * FROM tbl_category LIMIT ${offset},${limit}`
+  );
+  const data = helper.emptyOrRows(rows);
+  const length = data.length;
+  const status = length < 1 ? false : true;
+  return {
+    status,
+    data,
+    length,
+  };
+};

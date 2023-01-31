@@ -11,6 +11,17 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/offset/:offset/limit/:limit", async (req, res, next) => {
+  try {
+    res.json(
+      await placesController.getOffLimit(req.params.offset, req.params.limit)
+    );
+  } catch (err) {
+    console.error("Error", err.message);
+    next(err);
+  }
+});
+
 router.get("/cat/:cid", async (req, res, next) => {
   try {
     res.json(
